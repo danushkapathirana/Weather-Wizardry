@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+}
+
+.weather__container {
+  display: flex;
+}
+
+.cloud_desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.temperature {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.temperature p:nth-child(1) {
+  font-size: 3rem;
+}
+
+.temperature p:nth-child(2) {
+  font-size: 0.75rem;
+}
+
+.detailed_weather__container {
+  flex: 1;
+}

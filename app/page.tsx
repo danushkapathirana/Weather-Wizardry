@@ -6,11 +6,13 @@ import { format, parseISO } from "date-fns";
 import Navbar from "../components/navbar";
 import Container from "../components/ui/container";
 import DetailedWeather from "../components/weather/DetailedWeather";
+import ForecastWeather from "../components/weather/ForecastWeather";
 import { fetchCurrentWeatherInfo } from "../api/fetchCurrentWeatherInfo";
 import { fetchForecastWeatherInfo } from "../api/fetchForecastWeatherInfo";
 import {
   CurrentWeatherDataType,
   ForecastWeatherDataType,
+  ForecastWeatherListType,
 } from "../helpers/types";
 import { getDayOrNightIcon } from "../utils/getDayOrNightIcon";
 import { convertTemperature } from "../utils/convertTemperature";
@@ -30,6 +32,9 @@ export default function Page() {
     useState<CurrentWeatherDataType>();
   const [forecastWeatherInfo, setForecastWeatherInfo] =
     useState<ForecastWeatherDataType>();
+  const [forecastWeatherDataList, setForecastWeatherDataList] = useState<
+    ForecastWeatherListType[]
+  >([]);
 
   // get geo coordinates
   const getGeoCoordinates = () => {
@@ -72,6 +77,37 @@ export default function Page() {
     }
   };
 
+  // get unique dates
+  const forecastUniqueDateList: string[] = [];
+  const getForecastUniqueDates = () => {
+    let count = 0;
+    forecastWeatherInfo?.list.forEach((item) => {
+      const date = item.dt_txt.split(" ")[0];
+      if (!forecastUniqueDateList.includes(date) && count < 7) {
+        forecastUniqueDateList.push(date);
+        count++;
+      }
+    });
+    getForecastWeatherData();
+  };
+
+  // get first weather data for each unique date
+  const getForecastWeatherData = () => {
+    if (forecastUniqueDateList.length > 0) {
+      forecastUniqueDateList.forEach((date) => {
+        const weatherData = forecastWeatherInfo?.list.find((item) =>
+          item.dt_txt.startsWith(date)
+        );
+        if (weatherData) {
+          setForecastWeatherDataList((prevState) => [
+            ...prevState,
+            weatherData,
+          ]);
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     getGeoCoordinates();
   }, []);
@@ -83,6 +119,13 @@ export default function Page() {
   useEffect(() => {
     fetchForecastWeatherData();
   }, [currentGeoPosition, searchPlace]);
+
+  useEffect(() => {
+    if (forecastWeatherInfo) {
+      setForecastWeatherDataList([]);
+      getForecastUniqueDates();
+    }
+  }, [forecastWeatherInfo]);
 
   return (
     <div>
@@ -190,6 +233,17 @@ export default function Page() {
                 sunset={currentWeatherInfo?.sys.sunset}
               />
             </Container>
+          </div>
+          <div className={classes.forecast_weather__wrapper}>
+            <p>Forecast</p>
+            {forecastWeatherDataList.length > 0 &&
+              forecastWeatherDataList.map((data, index) => (
+                <div key={index}>
+                  <Container classNames={classes.forecast_weather__container}>
+                    <ForecastWeather data={data} iconColor="black" />
+                  </Container>
+                </div>
+              ))}
           </div>
         </div>
       </main>

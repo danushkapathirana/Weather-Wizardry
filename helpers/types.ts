@@ -33,22 +33,7 @@ export interface ForecastWeatherDataType {
   };
   cnt: number;
   cod: string;
-  list: {
-    clouds: {
-      all: number;
-    };
-    dt: number;
-    dt_txt: string;
-    main: MainWeatherType;
-    pop: number;
-    sys: {
-      pod: string;
-    };
-    visibility: number;
-    weather: WeatherDescriptionType[];
-    wind: WindType;
-    message: number;
-  }[];
+  list: ForecastWeatherListType[];
 }
 
 // common types
@@ -80,4 +65,21 @@ export interface WindType {
   deg: number;
   gust: number;
   speed: number;
+}
+
+export interface ForecastWeatherListType {
+  clouds: {
+    all: number;
+  };
+  dt: number;
+  dt_txt: string;
+  main: MainWeatherType;
+  pop: number;
+  sys: {
+    pod: string;
+  };
+  visibility: number;
+  weather: WeatherDescriptionType[];
+  wind: WindType;
+  message: number;
 }

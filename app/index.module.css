@@ -94,3 +94,12 @@
   max-width: 90rem;
   background-color: #3b82f6;
 }
+
+.forecast_weather__wrapper > p {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.forecast_weather__container {
+  margin-bottom: 1rem;
+}

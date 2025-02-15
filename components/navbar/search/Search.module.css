@@ -1,0 +1,28 @@
+.form_container {
+  display: flex;
+  justify-content: center;
+}
+
+.form_input,
+.form_button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.form_input {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px 0 0 5px;
+  border-right: none;
+}
+
+.form_input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.form_button {
+  border: 1px solid #3b82f6;
+  border-radius: 0 5px 5px 0;
+  border-left: none;
+  background-color: #3b82f6;
+}

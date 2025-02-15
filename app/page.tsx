@@ -1,16 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { format, parseISO } from "date-fns";
 
 import Navbar from "../components/navbar";
+import Container from "../components/ui/container";
 import { fetchCurrentWeatherInfo } from "../api/fetchCurrentWeatherInfo";
 import { fetchForecastWeatherInfo } from "../api/fetchForecastWeatherInfo";
 import {
   CurrentWeatherDataType,
   ForecastWeatherDataType,
 } from "../helpers/types";
+import { getDayOrNightIcon } from "../utils/getDayOrNightIcon";
+import { convertTemperature } from "../utils/convertTemperature";
 
 import "./globals.css";
+import classes from "./index.module.css";
+import ArrowUpIcon from "../components/icons/arrow-up-icon";
+import ArrowDownIcon from "../components/icons/arrow-down-icon";
+import WeatherIcon from "../components/icons/weather-icons/weather-icon";
 
 export default function Page() {
   const [searchPlace, setSearchPlace] = useState<string | null>(null);
@@ -88,6 +96,75 @@ export default function Page() {
         }}
         location={currentWeatherInfo ? currentWeatherInfo.name : ""}
       />
+      <main className={classes.main}>
+        <div className={classes.content}>
+          <div className={classes.date}>
+            <p>
+              {forecastWeatherInfo &&
+                format(
+                  parseISO(forecastWeatherInfo.list[0].dt_txt),
+                  "dd.MM.yyyy"
+                )}
+            </p>
+            <p>
+              {forecastWeatherInfo &&
+                format(parseISO(forecastWeatherInfo.list[0].dt_txt), "EEEE")}
+            </p>
+          </div>
+          <Container classNames={classes.current_date_weather__container}>
+            <div className={classes.current_date__temperature}>
+              <p>
+                {currentWeatherInfo &&
+                  convertTemperature(currentWeatherInfo.main.temp)}
+                °
+              </p>
+              <p>
+                <span>Feels like </span>
+                <span>
+                  {currentWeatherInfo &&
+                    convertTemperature(currentWeatherInfo.main.feels_like)}
+                  °
+                </span>
+              </p>
+              <p>
+                <span>
+                  {currentWeatherInfo &&
+                    convertTemperature(currentWeatherInfo.main.temp_max)}
+                  °
+                  <ArrowUpIcon width="12px" height="12px" />
+                </span>
+                <span>
+                  {currentWeatherInfo &&
+                    convertTemperature(currentWeatherInfo.main.temp_min)}
+                  °
+                  <ArrowDownIcon width="12px" height="12px" />
+                </span>
+              </p>
+            </div>
+            <div className={classes.current_date__forecast}>
+              {forecastWeatherInfo?.list.map((item, index) => (
+                <div
+                  key={index}
+                  className={classes.current_date__forecast_details}
+                >
+                  <p>{format(parseISO(item.dt_txt), "h:mm a")}</p>
+                  <div>
+                    <WeatherIcon
+                      width={75}
+                      height={75}
+                      iconName={getDayOrNightIcon(
+                        item.weather[0].icon,
+                        item.dt_txt
+                      )}
+                    />
+                  </div>
+                  <p>{convertTemperature(item.main.temp)}°</p>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </div>
+      </main>
     </div>
   );
 }

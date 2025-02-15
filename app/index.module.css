@@ -1,0 +1,70 @@
+.main {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.content {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.date {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.date p:nth-of-type(1) {
+  font-size: 1.125rem;
+}
+
+.date p:nth-of-type(2) {
+  font-size: 0.875rem;
+}
+
+.current_date_weather__container {
+  display: flex;
+  align-items: center;
+}
+
+.current_date__temperature {
+  padding: 0 2rem;
+}
+
+.current_date__temperature p:nth-child(1) {
+  font-size: 3rem;
+}
+
+.current_date__temperature p:nth-child(2) > span {
+  font-size: 0.75rem;
+}
+
+.current_date__temperature p:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.current_date__temperature p:nth-child(3) span {
+  display: flex;
+  align-items: center;
+}
+
+.current_date__forecast {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  overflow-x: auto;
+}
+
+.current_date__forecast_details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}

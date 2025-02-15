@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 
 import Navbar from "../components/navbar";
 import Container from "../components/ui/container";
+import DetailedWeather from "../components/weather/DetailedWeather";
 import { fetchCurrentWeatherInfo } from "../api/fetchCurrentWeatherInfo";
 import { fetchForecastWeatherInfo } from "../api/fetchForecastWeatherInfo";
 import {
@@ -163,6 +164,33 @@ export default function Page() {
               ))}
             </div>
           </Container>
+          <div className={classes.current_date_detailed_weather__wrapper}>
+            <Container classNames={classes.cd_dw_clouds_desc__container}>
+              <p>{forecastWeatherInfo?.list[0].weather[0].description}</p>
+              <WeatherIcon
+                width={75}
+                height={75}
+                iconName={
+                  forecastWeatherInfo
+                    ? getDayOrNightIcon(
+                        forecastWeatherInfo.list[0].weather[0].icon,
+                        forecastWeatherInfo.list[0].dt_txt
+                      )
+                    : ""
+                }
+              />
+            </Container>
+            <Container classNames={classes.cd_dw_forecast__container}>
+              <DetailedWeather
+                visibility={currentWeatherInfo?.visibility}
+                humidity={currentWeatherInfo?.main.humidity}
+                windSpeed={currentWeatherInfo?.wind.speed}
+                airPressure={currentWeatherInfo?.main.pressure}
+                sunrise={currentWeatherInfo?.sys.sunrise}
+                sunset={currentWeatherInfo?.sys.sunset}
+              />
+            </Container>
+          </div>
         </div>
       </main>
     </div>

@@ -68,3 +68,29 @@
   font-weight: bold;
   margin-bottom: 0.25rem;
 }
+
+.current_date_detailed_weather__wrapper {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* cd_dw => current_date_detailed_weather */
+.cd_dw_clouds_desc__container {
+  max-width: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cd_dw_clouds_desc__container > p {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+/* cd_dw => current_date_detailed_weather */
+.cd_dw_forecast__container {
+  max-width: 90rem;
+  background-color: #3b82f6;
+}
